@@ -1,13 +1,240 @@
-<html>
-  <head>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>98ml's Blog</title>
     <style>
-      .content {
-        color: black;
-        font:64px bold;
-      }
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
+                         "Helvetica Neue", Arial, "Noto Sans JP", sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 隐藏原生单选按钮 */
+        input[name="language"] {
+            display: none;
+        }
+
+        /* 导航栏 */
+        nav {
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .blog-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .lang-switcher {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-switcher label {
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            background: #f0f2f5;
+            color: #666;
+            user-select: none;
+        }
+
+        .lang-switcher label:hover {
+            background: #e4e7ed;
+        }
+
+        /* 语言选中高亮 */
+        #lang-zh:checked ~ nav label[for="lang-zh"],
+        #lang-ja:checked ~ nav label[for="lang-ja"],
+        #lang-en:checked ~ nav label[for="lang-en"] {
+            background-color: #4a90e2;
+            color: #ffffff;
+        }
+
+        /* 语言内容默认隐藏 */
+        .lang-content {
+            display: none;
+        }
+
+        /* 切换显示对应语言 */
+        #lang-zh:checked ~ main .zh-content,
+        #lang-zh:checked ~ nav .zh-title { display: block; }
+
+        #lang-ja:checked ~ main .ja-content,
+        #lang-ja:checked ~ nav .ja-title { display: block; }
+
+        #lang-en:checked ~ main .en-content,
+        #lang-en:checked ~ nav .en-title { display: block; }
+
+        /* 主内容区垂直居中 */
+        main {
+            min-height: calc(100vh - 68px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* 个人资料卡片 */
+        .profile-card {
+            background: #ffffff;
+            padding: 3rem 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #ffffff;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1.5rem;
+        }
+
+        .username {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 0.8rem;
+        }
+
+        .bio {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        /* 社交链接 */
+        .social-links {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            padding: 0.65rem 1.3rem;
+            border-radius: 8px;
+            background-color: #f0f2f5;
+            color: #333;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background-color: #4a90e2;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+        }
+
+        /* 移动端适配 */
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.8rem 1rem;
+            }
+
+            .blog-title {
+                font-size: 1rem;
+            }
+
+            .profile-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .username {
+                font-size: 1.5rem;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <p class="content">你好！欢迎来到我的个人博客^ ^</p>
-  </body>
-<html>
+</head>
+<body>
+    <!-- 三语切换单选按钮 -->
+    <input type="radio" name="language" id="lang-zh" checked>
+    <input type="radio" name="language" id="lang-ja">
+    <input type="radio" name="language" id="lang-en">
+
+    <!-- 导航栏 -->
+    <nav>
+        <div class="blog-title">
+            <span class="lang-content zh-title">98ml的个人博客</span>
+            <span class="lang-content ja-title">98mlの個人ブログ</span>
+            <span class="lang-content en-title">98ml's Blog</span>
+        </div>
+        <div class="lang-switcher">
+            <label for="lang-zh">中</label>
+            <label for="lang-ja">日</label>
+            <label for="lang-en">En</label>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main>
+        <div class="profile-card">
+            <img src="static/imgs/avatar.jpeg" alt="头像" class="avatar">
+            <h1 class="username">98ml</h1>
+            
+            <div class="bio">
+                <p class="lang-content zh-content">我喜欢小动物们！</p>
+                <p class="lang-content ja-content">私は小動物たちが好きです！</p>
+                <p class="lang-content en-content">I love little animals!</p>
+            </div>
+
+            <div class="social-links">
+                <a href="https://space.bilibili.com/509962305" target="_blank" class="social-link">
+                    <span class="lang-content zh-content">B站</span>
+                    <span class="lang-content ja-content">bilibili</span>
+                    <span class="lang-content en-content">Bilibili</span>
+                </a>
+                <a href="" target="_blank" class="social-link">
+                    <span class="lang-content zh-content">微博</span>
+                    <span class="lang-content ja-content">微博</span>
+                    <span class="lang-content en-content">Weibo</span>
+                </a>
+                <a href="" target="_blank" class="social-link">
+                    <span class="lang-content zh-content">抖音</span>
+                    <span class="lang-content ja-content">抖音</span>
+                    <span class="lang-content en-content">Douyin</span>
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
